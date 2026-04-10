@@ -11,6 +11,7 @@ const HazardZoneSchema = new mongoose.Schema(
     },
     coordinates: [{ lat: Number, lng: Number }],
     description: { type: String },
+    radius: { type: Number, default: 400 }, // in meters
   },
   { timestamps: true },
 );
