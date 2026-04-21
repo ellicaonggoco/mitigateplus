@@ -148,7 +148,10 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.headerSub}>City of Manila DRRM</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.headerAvatar}>
+        <TouchableOpacity
+          style={styles.headerAvatar}
+          onPress={() => navigation.navigate("Settings")}
+        >
           <Text style={styles.headerAvatarText}>
             {user?.name?.charAt(0)?.toUpperCase() || "U"}
           </Text>

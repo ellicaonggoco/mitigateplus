@@ -20,6 +20,16 @@ const ReportSchema = new mongoose.Schema(
       lng: { type: Number, required: true },
       address: { type: String },
     },
+    startLocation: {
+      lat: { type: Number },
+      lng: { type: Number },
+      address: { type: String },
+    },
+    endLocation: {
+      lat: { type: Number },
+      lng: { type: Number },
+      address: { type: String },
+    },
     imageUrl: { type: String },
     status: {
       type: String,

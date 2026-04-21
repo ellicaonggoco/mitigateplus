@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { AuthProvider, useAuth } from "./src/context/AuthContext";
 
@@ -13,13 +13,15 @@ import ReportScreen from "./src/screens/ReportScreen";
 import AssessmentScreen from "./src/screens/AssessmentScreen";
 import GoBagScreen from "./src/screens/GoBagScreen";
 import ChatbotScreen from "./src/screens/ChatbotScreen";
+import SettingsScreen from "./src/screens/SettingsScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+// ✅ Bottom Tabs
 const MainTabs = () => (
   <Tab.Navigator
-    screenOptions={({ route }) => ({
+    screenOptions={{
       headerShown: false,
       tabBarActiveTintColor: "#1565c0",
       tabBarInactiveTintColor: "#9e9e9e",
@@ -41,7 +43,7 @@ const MainTabs = () => (
         fontWeight: "600",
         marginTop: 2,
       },
-    })}
+    }}
   >
     <Tab.Screen
       name="Home"
@@ -114,7 +116,8 @@ const MainTabs = () => (
   </Tab.Navigator>
 );
 
-const AppNavigator = () => {
+// ✅ Root App with single NavigationContainer
+const RootApp = () => {
   const { user, loaded } = useAuth();
 
   if (!loaded) {
@@ -136,7 +139,10 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <Stack.Screen name="Main" component={MainTabs} />
+          <>
+            <Stack.Screen name="Main" component={MainTabs} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+          </>
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
@@ -148,10 +154,11 @@ const AppNavigator = () => {
   );
 };
 
+// ✅ Default export wraps everything in AuthProvider
 export default function App() {
   return (
     <AuthProvider>
-      <AppNavigator />
+      <RootApp />
     </AuthProvider>
   );
 }
